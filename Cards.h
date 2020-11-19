@@ -13,12 +13,18 @@ class Card
         std::string name;
         std::string desc;
 
+        std::string path_to_img;
         sf::Texture image_text;
         sf::Sprite image_spr;
 
         Card()
         {
 
+        }
+
+        void Reload_texture()
+        {
+            image_spr.setTexture(image_text);
         }
 
 };
@@ -54,11 +60,20 @@ std::array<Card,23> LoadCards()
             //==========DATA==========
             switch(counter)
             {
-                case 0: //name of card
+                case 0: //name of card and path to image
                     Temp_card.name = line;
                     break;
             }
 
+            //LOADING THE IMAGE OF THE CARD
+                //cleaning the string to find picture =====
+            std::string clean_image_name = cards_to_load[i].substr(0, cards_to_load[i].size()-4);
+            clean_image_name.erase(0,10);
+            Temp_card.path_to_img = "img/cards/" + clean_image_name + ".png";
+                //========================================
+            //assigning images, textures.
+            Temp_card.image_text.loadFromFile(Temp_card.path_to_img);
+            Temp_card.image_spr.setTexture(Temp_card.image_text);
             counter++;
         }
         all_cards[i] = Temp_card; //put in array
@@ -67,6 +82,15 @@ std::array<Card,23> LoadCards()
 
 
     return all_cards;
+}
+
+void ReloadTextures(std::array<Card,23> allcards)
+{
+    for(unsigned int i = 1;i < allcards.size();i++)
+    {
+        std::cout << allcards[i].path_to_img << std::endl;
+        allcards[i].Reload_texture();
+    }
 }
 
 #endif // CARDS_H_INCLUDED

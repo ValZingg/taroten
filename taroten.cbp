@@ -26,7 +26,7 @@
 			<Add library="sfml-system" />
 			<Add directory="C:/SFML/lib" />
 		</Linker>
-		<Unit filename="drawing.h" />
+		<Unit filename="Cards.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
