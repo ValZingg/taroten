@@ -11,7 +11,7 @@ class Card
 {
     public:
         std::string name;
-        std::string desc;
+        std::string tag;
 
         std::string path_to_img;
         sf::Texture image_text;
@@ -60,8 +60,12 @@ std::array<Card,23> LoadCards()
             //==========DATA==========
             switch(counter)
             {
-                case 0: //name of card and path to image
+                case 0: //name of card
                     Temp_card.name = line;
+                    break;
+
+                case 1: //card TAG (short version of name in 3 letters)
+                    Temp_card.tag = line;
                     break;
             }
 
@@ -82,15 +86,6 @@ std::array<Card,23> LoadCards()
 
 
     return all_cards;
-}
-
-void ReloadTextures(std::array<Card,23> allcards)
-{
-    for(unsigned int i = 1;i < allcards.size();i++)
-    {
-        std::cout << allcards[i].path_to_img << std::endl;
-        allcards[i].Reload_texture();
-    }
 }
 
 #endif // CARDS_H_INCLUDED
