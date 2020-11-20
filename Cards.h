@@ -25,6 +25,12 @@ class Card
         void Reload_texture()
         {
             image_spr.setTexture(image_text);
+            this->SetOriginInMiddle();
+        }
+
+        void SetOriginInMiddle() //met le point d'origine de l'image au centre de l'image
+        {
+            image_spr.setOrigin(sf::Vector2f(image_spr.getGlobalBounds().height/2,image_spr.getGlobalBounds().width/2));
         }
 
 };

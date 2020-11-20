@@ -28,6 +28,8 @@
 		</Linker>
 		<Unit filename="Cards.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="menu.h" />
+		<Unit filename="menuelements.h" />
 		<Extensions>
 			<code_completion />
 			<envvars />
