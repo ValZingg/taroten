@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Cards.h"
 #include "menu.h"
+#include "pre_game.h"
 
 #define WINDOW_HEIGHT 1600
 #define WINDOW_WIDTH 900
@@ -22,8 +23,27 @@ int main()
     }
 
     //============== LOOP DU MENU ============
-    MenuLoop(&window);
-    window.clear(); //nettoie les éléments restant du menu
+    bool game_active = true;
+    while(game_active)
+    {
+        if(!window.isOpen())return 999; //si l'utilisateur ferme la fenêtre avec le X rouge, fermer le programme
+        std::cout << "et un autre" << std::endl;
+        int choixmenu = MenuLoop(&window); //envoie l'utilsateur dans menu.h, et décide de la suite suivant le chiffre renvoyé
+        switch(choixmenu)
+        {
+            default:
+                break;
+
+            case 1: //"Pré-jeu", là ou l'utilisateur va choisir son personnage
+                PreGame(&window);
+                break;
+
+            case EXIT_SUCCESS:
+                return EXIT_SUCCESS;
+                break;
+        }
+    }
+
     //=============================================================================== LOOP DU JEU ====================================================================================
     while (window.isOpen())
     {
