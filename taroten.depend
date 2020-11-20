@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1605895128 source:c:\users\valentin\documents\programming\c++\taroten\main.cpp
+1605907477 source:c:\users\valentin\documents\programming\c++\taroten\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
@@ -459,7 +459,7 @@
 1605814598 c:\users\valentin\documents\programming\c++\taroten\drawing.h
 	<SFML/Graphics.hpp>
 
-1605870052 c:\users\valentin\documents\programming\c++\taroten\cards.h
+1605908044 c:\users\valentin\documents\programming\c++\taroten\cards.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	<filesystem>
@@ -472,15 +472,20 @@
 	"Cards.h"
 	"menuelements.h"
 
-1605895842 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
+1605907244 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	<string>
 
-1605895825 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
+1605907758 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
 	"menu.h"
 	"menuelements.h"
+	"characters.h"
+
+1605908149 c:\users\valentin\documents\programming\c++\taroten\characters.h
+	"Cards.h"
+	<iostream>
 

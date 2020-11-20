@@ -34,6 +34,7 @@ class GUI_Button : public GUI_Element
     public:
         sf::Text b_text; //représentation graphique du texte
         std::string b_action; //L'action que fera le bouton quand on clique dessus
+        bool has_an_image = false; //permet de sauter cet élément dans la fonction de dessinage si il n'a pas d'image
 
         GUI_Button(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy)
         {
@@ -62,6 +63,39 @@ class GUI_Button : public GUI_Element
         {
             e_sprite.setTexture(e_texture);
         }
+};
+
+//même chose qu'un bouton mais avec une image
+class GUI_Button_with_image : public GUI_Button
+{
+    public: //bi = button with image
+        sf::Texture bi_texture;
+        sf::Sprite bi_sprite;
+
+        //c'est très long et très moche, mais je sais pas comment faire autrement
+        GUI_Button_with_image(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy,std::string imagepath) : GUI_Button(font,text,action,width,height,locationx,locationy)
+        {
+            //chargement et assignations
+            if(!bi_texture.loadFromFile(imagepath))std::cout << "Failed loading image :" << imagepath << std::endl;
+            bi_sprite.setTexture(bi_texture);
+
+            has_an_image = true; //confirme qu'on a bien une image, sers à savoir si on doit afficher qqch
+
+            //positionnement de l'image
+            bi_sprite.setOrigin(sf::Vector2f(bi_sprite.getGlobalBounds().width/2, bi_sprite.getGlobalBounds().height/2));
+
+            float scalex = width / bi_sprite.getGlobalBounds().width;
+            float scaley = height / bi_sprite.getGlobalBounds().height;
+            bi_sprite.setScale(sf::Vector2f(scalex * 0.7,scaley * 0.7)); //définis la taille de l'image à 70% de la taille du bouton,pour faire que l'image ne cache pas le texte
+            //définis la position de l'image au centre du bouton, mais aussi un petit peu décalé en bas, pour laisse apparaître le texte du bouton en haut
+            bi_sprite.setPosition(sf::Vector2f(e_sprite.getPosition().x + (e_sprite.getGlobalBounds().width / 2), e_sprite.getPosition().y + (e_sprite.getGlobalBounds().height / 1.8)));
+        }
+
+        void Reload_image()
+        {
+            bi_sprite.setTexture(bi_texture);
+        }
+
 };
 
 

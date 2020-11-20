@@ -11,7 +11,7 @@
 int main()
 {
     //========== FENETRE
-    sf::RenderWindow window(sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(WINDOW_HEIGHT, WINDOW_WIDTH), "Taroten");
     window.setFramerateLimit(60);
     //=================
 
@@ -34,7 +34,7 @@ int main()
             default:
                 break;
 
-            case 1: //"Pré-jeu", là ou l'utilisateur va choisir son personnage
+            case 1: //"Pré-jeu", là ou l'utilisateur va choisir son personnage et autres options
                 PreGame(&window);
                 break;
 

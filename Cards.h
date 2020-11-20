@@ -37,7 +37,6 @@ class Card
 
 std::array<Card,23> LoadCards()
 {
-    std::cout << "Loading cards..." << std::endl;
     std::array<Card,23> all_cards; //define array to return
 
     //==== GETTING ALL THE PATHS TO THE FILES =====

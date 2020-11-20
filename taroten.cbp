@@ -27,6 +27,7 @@
 			<Add directory="C:/SFML/lib" />
 		</Linker>
 		<Unit filename="Cards.h" />
+		<Unit filename="characters.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="menu.h" />
 		<Unit filename="menuelements.h" />

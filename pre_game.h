@@ -5,6 +5,7 @@
 #include "Cards.h"
 #include "menu.h"
 #include "menuelements.h"
+#include "characters.h"
 
 int PreGame(sf::RenderWindow *window)
 {
@@ -16,8 +17,10 @@ int PreGame(sf::RenderWindow *window)
     clock.restart();
     //=============== définitions des éléments du menu ===========
     std::vector<GUI_Element*> menu_elements; //stocke tout les éléments du menu dans un vecteur pour les dessiner plus facilemtn après
-    GUI_Button button_test(&police,"Test","test",400.0f,100.0f,600.0f,300.0f);
-    menu_elements.push_back(&button_test);
+
+    //BOUTON DU CHOIX DU PERSO NUMERO 1
+    GUI_Button_with_image testen(&police,"Perso1","choose_char1",400.0f,300.0f,50.0f,50.0f,"img/characters/char_1_portrait.png");
+    menu_elements.push_back(&testen);
     //============================================================
     while(window->isOpen())
     {
@@ -46,6 +49,11 @@ int PreGame(sf::RenderWindow *window)
             GUI_Button *tempbutton = static_cast<GUI_Button*>(menu_elements[k]);
             if(tempbutton->b_text.getString().getSize() > 0)window->draw(tempbutton->b_text);
             std::string button_action = tempbutton->b_action; //essaie de récuperer l'action du bouton
+
+            //même chose qu'au dessus, mais cette fois si on détecte si c'est un bouton avec image
+            // et si une image est trouvée, on la dessine
+            GUI_Button_with_image *tempbuttonwithimg = static_cast<GUI_Button_with_image*>(menu_elements[k]);
+            if(tempbuttonwithimg->has_an_image)window->draw(tempbuttonwithimg->bi_sprite);
 
             //======== gestion de la détéction des clics sur les boutons ========
             //si la souris survole un bouton
