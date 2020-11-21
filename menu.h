@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "Cards.h"
 #include "menuelements.h"
+#include "GUI_Manager.h"
 
 /*
     MENULOOP
@@ -14,7 +15,6 @@
 */
 int MenuLoop(sf::RenderWindow *window)
 {
-    bool in_menu = true;
     //=============== charge la police d'écriture pour les éléments de l'interface======
     sf::Font police; //charge la police d'écriture
     police.loadFromFile("fonts/Timeless.ttf");
@@ -36,7 +36,7 @@ int MenuLoop(sf::RenderWindow *window)
     GUI_Button button_quit(&police,"Quitter","quit",400.0f,100.0f,600.0f,700.0f);
     menu_elements.push_back(&button_quit);
     //============================================================
-    while(window->isOpen() && in_menu == true)
+    while(window->isOpen())
     {
         sf::Event event;
         while (window->pollEvent(event))
@@ -51,61 +51,8 @@ int MenuLoop(sf::RenderWindow *window)
         //=====dessinage des choses======
         window->clear();
         //======
-        for(unsigned int k = 0;k < menu_elements.size();k++)
-        {
-            window->draw(menu_elements[k]->e_sprite); //dessine tout les éléments de l'interface
-
-            //!!! Le vecteur menu_elements est fait de la classe parente GUI_element,
-            //!!! donc quand nous voulons dessiner par exemple le texte d'un bouton,
-            //!!! le programme va crasher car GUI_element ne contient pas d'attribut Texte,
-            //!!! c'est GUI_Button qui a un attribut texte. Donc pour y remédier, nous
-            //!!! crééons une instance de classe GUI_Button temporaire, puis nous checkons si elle possède
-            //!!! un texte à afficher, si oui, on l'affiche, sinon, on passe.
-            //crée un bouton temporaire pour vérifier si l'élément actuel est un bouton
-            //avec du texte à afficher
-            GUI_Button *tempbutton = static_cast<GUI_Button*>(menu_elements[k]);
-            if(tempbutton->b_text.getString().getSize() > 0)window->draw(tempbutton->b_text);
-            std::string button_action = tempbutton->b_action; //essaie de récuperer l'action du bouton
-
-
-            //======== gestion de la détéction des clics sur les boutons ========
-            //si la souris survole un bouton
-            if(menu_elements[k]->e_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(*window).x,sf::Mouse::getPosition(*window).y))
-            {
-                //montre qu'on le survole en changeant le texte en jaune
-                menu_elements[k]->e_sprite.setColor(sf::Color::Yellow);
-                //et qu'on clique dessus
-                //Il faut qu'au moins une seconde soit passée depuis le début de la boucle pour pouvoir cliquer.
-                //Cela sert à empecher le programme de register les clics entre changement d'interface
-                if(sf::Mouse::isButtonPressed(sf::Mouse::Left) && clock.getElapsedTime().asSeconds() > 1)
-                {
-                    std::cout << "action bouton = "<< button_action << std::endl;
-                    //on décide ensuite l'action avec le contenu de button_action
-                    //Obligé de faire des if..elses..if...elses parce que impossible de faire
-                    // des switchs avec des strings :(
-                    if(button_action == "quit")
-                    {
-                        //on stop le loop du menu, et on quitte le jeu
-                        in_menu = false;
-                        return EXIT_SUCCESS;
-                    }
-
-                    if(button_action == "newgame")
-                    {
-                        in_menu = false;
-                        return 1; //envoie l'utilisateur au choix du personnage
-                    }
-                }
-            }
-            else
-            {
-                //si la souris ne survole plus un bouton, on le remet dans sa couleur normale
-                if(menu_elements[k]->e_sprite.getColor() == sf::Color::Yellow)
-                {
-                    menu_elements[k]->e_sprite.setColor(sf::Color::White);
-                }
-            }
-        }
+        int returnedvalue = GUIMANAGER(window,menu_elements,clock); //affiche l'interface et gère les clics
+        if(returnedvalue != 0)return returnedvalue;
         //======
         window->display();
     }

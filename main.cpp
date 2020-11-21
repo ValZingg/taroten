@@ -38,7 +38,7 @@ int main()
                 PreGame(&window);
                 break;
 
-            case EXIT_SUCCESS:
+            case 99:
                 return EXIT_SUCCESS;
                 break;
         }

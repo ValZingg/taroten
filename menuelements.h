@@ -22,9 +22,27 @@ class GUI_Element
         sf::Texture e_texture; //texture de l'élément
         sf::Sprite e_sprite; //sprite de l'élément
 
-        GUI_Element()
-        {
+        bool has_an_image = false; //permet de sauter cet élément dans la fonction de dessinage si il n'a pas d'image
+        bool has_text = false; //même chose mais pour le texte
+        bool highlight_on = false; //change de couleur si on le survole avec le curseur
+        bool is_clickable = false;
 
+
+        GUI_Element(float width, float height, float locationx, float locationy)
+        {
+            //=== positionnement du sprite du bouton et textures
+            e_texture.loadFromFile(PATH_TO_DEFAULT_TEXTURE); //charge la texture
+            e_sprite.setTexture(e_texture); //assigne la texture au sprite
+            e_sprite.setPosition(sf::Vector2f(locationx,locationy)); //position du bouton
+            // === Conversions
+            float scalex = width / e_sprite.getGlobalBounds().width;
+            float scaley = height / e_sprite.getGlobalBounds().height;
+            e_sprite.setScale(sf::Vector2f(scalex,scaley)); //le rend rectangulaire
+        }
+
+        void Reload_texture()
+        {
+            e_sprite.setTexture(e_texture);
         }
 };
 
@@ -34,35 +52,25 @@ class GUI_Button : public GUI_Element
     public:
         sf::Text b_text; //représentation graphique du texte
         std::string b_action; //L'action que fera le bouton quand on clique dessus
-        bool has_an_image = false; //permet de sauter cet élément dans la fonction de dessinage si il n'a pas d'image
 
-        GUI_Button(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy)
+        GUI_Button(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy) : GUI_Element(width,height,locationx,locationy)
         {
+            is_clickable = true;
+            highlight_on = true;
+
             b_text.setFont(*font);   //assigne la police
             b_text.setString(text); //assigne le texte au graphisme
             b_text.setCharacterSize(50);
             b_text.setFillColor(sf::Color::White);
+            has_text = true;
 
             b_action = action; //assigne l'action
-
-            //=== positionnement du sprite du bouton et textures
-            e_texture.loadFromFile(PATH_TO_DEFAULT_TEXTURE); //charge la texture
-            e_sprite.setTexture(e_texture); //assigne la texture au sprite
-            e_sprite.setPosition(sf::Vector2f(locationx,locationy)); //position du bouton
-            // === Conversions
-            float scalex = width / e_sprite.getGlobalBounds().width;
-            float scaley = height / e_sprite.getGlobalBounds().height;
-            e_sprite.setScale(sf::Vector2f(scalex,scaley)); //le rend rectangulaire
 
             //Aligne le texte au centre du bouton
             float xPos = (locationx + e_sprite.getLocalBounds().width / 2) - (b_text.getLocalBounds().width / 2);
             b_text.setPosition(xPos, e_sprite.getPosition().y);
         }
 
-        void Reload_texture()
-        {
-            e_sprite.setTexture(e_texture);
-        }
 };
 
 //même chose qu'un bouton mais avec une image
@@ -75,6 +83,7 @@ class GUI_Button_with_image : public GUI_Button
         //c'est très long et très moche, mais je sais pas comment faire autrement
         GUI_Button_with_image(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy,std::string imagepath) : GUI_Button(font,text,action,width,height,locationx,locationy)
         {
+            is_clickable = true;
             //chargement et assignations
             if(!bi_texture.loadFromFile(imagepath))std::cout << "Failed loading image :" << imagepath << std::endl;
             bi_sprite.setTexture(bi_texture);

@@ -466,26 +466,36 @@
 	<string>
 	<fstream>
 
-1605896297 c:\users\valentin\documents\programming\c++\taroten\menu.h
+1605968101 c:\users\valentin\documents\programming\c++\taroten\menu.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
 	"menuelements.h"
+	"GUI_Manager.h"
 
-1605907244 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
+1605967929 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	<string>
 
-1605907758 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
+1605967532 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
 	"menu.h"
 	"menuelements.h"
 	"characters.h"
+	"GUI_Manager.h"
 
 1605908149 c:\users\valentin\documents\programming\c++\taroten\characters.h
 	"Cards.h"
 	<iostream>
+
+1605968001 c:\users\valentin\documents\programming\c++\taroten\gui_manager.h
+	<iostream>
+	<SFML/Graphics.hpp>
+	"Cards.h"
+	"menu.h"
+	"menuelements.h"
+	"characters.h"
 
