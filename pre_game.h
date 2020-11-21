@@ -21,12 +21,21 @@ int PreGame(sf::RenderWindow *window)
     std::vector<GUI_Element*> menu_elements; //stocke tout les éléments du menu dans un vecteur pour les dessiner plus facilemtn après
 
     //FOND DU MENU
-    GUI_Element Background(1600.0f,900.0f,0.0f,0.0f);
+    GUI_Element Background("background",1600.0f,900.0f,0.0f,0.0f);
     menu_elements.push_back(&Background);
 
+    //IMAGE DU CHOIX PERSO (VIDE AU DEPART)
+    GUI_Image chosen_character_img("empty_char_image",400.0f,500.0f,80.0f,350.0f,"empty");
+    menu_elements.push_back(&chosen_character_img);
+
+    //DESCRIPTION DU CHOIX PERSO (VIDE AU DEPART)
+    GUI_TextBox chosen_character_desc("character_desc",&police,"Cliquez sur la tête d'un personnage pour le selectionner...",1000.0f,500.0f,500.0f,350.0f);
+    menu_elements.push_back(&chosen_character_desc);
+
     //BOUTON DU CHOIX DU PERSO NUMERO 1
-    GUI_Button_with_image testen(&police,"Perso1","choose_char1",400.0f,300.0f,50.0f,50.0f,"img/characters/char_1_portrait.png");
+    GUI_Button_with_image testen("choose_maya_button",&police,"Maya","choose_maya",400.0f,300.0f,80.0f,50.0f,"img/characters/Maya_portrait.png");
     menu_elements.push_back(&testen);
+
     //============================================================
     while(window->isOpen())
     {

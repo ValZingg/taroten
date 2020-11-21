@@ -7,6 +7,8 @@
 #include "menuelements.h"
 #include "characters.h"
 
+Character player("Maya"); //charge maya par défaut
+
 int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements, sf::Clock clock)
 {
     for(unsigned int k = 0;k < menu_elements.size();k++)
@@ -21,16 +23,17 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
         //!!! un texte à afficher, si oui, on l'affiche, sinon, on passe.
         GUI_Button *tempbutton = static_cast<GUI_Button*>(menu_elements[k]);
         std::string button_action; //si c'est un bouton
-        if(tempbutton->has_text) //détermine si il y a du texte à afficher
-        {
-            window->draw(tempbutton->b_text);
-            //Seul les boutons on du texte, donc on sais que c'est un bouton si il y a du texte
-        }
+        if(tempbutton->has_text)window->draw(tempbutton->b_text); //détermine si il y a du texte, si oui, on le dessine
 
         //même chose qu'au dessus, mais cette fois si on détecte si c'est un bouton avec image
         // et si une image est trouvée, on la dessine
         GUI_Button_with_image *tempbuttonwithimg = static_cast<GUI_Button_with_image*>(menu_elements[k]);
-        if(tempbuttonwithimg->has_an_image)window->draw(tempbuttonwithimg->bi_sprite);
+        if(tempbuttonwithimg->has_an_image && tempbuttonwithimg->is_clickable)window->draw(tempbuttonwithimg->bi_sprite);
+
+        //Pour les simples images:
+        GUI_Image *tempimage = static_cast<GUI_Image*>(menu_elements[k]);
+        if(tempimage->has_an_image && tempimage->is_clickable == false)window->draw(tempimage->i_sprite);
+
 
         //======== gestion de la détéction des clics sur les boutons ========
         //si la souris survole un bouton
@@ -52,14 +55,33 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
                 //Obligé de faire des if..elses..if...elses parce que impossible de faire
                 // des switchs avec des strings :(
                 if(button_action == "quit")
-                {
-                    //on stop le loop du menu, et on quitte le jeu
-                    return 99;
-                }
+                    return 99;//on stop le loop du menu, et on quitte le jeu
 
                 if(button_action == "newgame")
-                {
                     return 1; //envoie l'utilisateur au choix du personnage
+
+
+                    //=========CHOIX DE PERSONNAGES===========
+                if(button_action == "choose_maya")
+                {
+                    player.LoadCharacter("Maya");
+                    for(unsigned int i = 0;i < menu_elements.size();i++) //cherche dans tout les éléments pour trouver le bon
+                    {
+                        //change l'image du personnage choisi par celui de Maya ou le joueur viens de cliquer dessus
+                        if(menu_elements[i]->unique_identifier == "empty_char_image")
+                        {
+                            tempimage = static_cast<GUI_Image*>(menu_elements[i]);
+                            tempimage->Change_Image("img/characters/Maya.png");
+                        }
+
+                        if(menu_elements[i]->unique_identifier == "character_desc")
+                        {
+                            GUI_TextBox *temptextbox = static_cast<GUI_TextBox*>(menu_elements[i]);
+                            temptextbox->b_text.setString(player.description);
+                        }
+
+                    }
+                    clock.restart();
                 }
             }
         }

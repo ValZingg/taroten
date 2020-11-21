@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1605907477 source:c:\users\valentin\documents\programming\c++\taroten\main.cpp
+1605968170 source:c:\users\valentin\documents\programming\c++\taroten\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
@@ -466,19 +466,19 @@
 	<string>
 	<fstream>
 
-1605968101 c:\users\valentin\documents\programming\c++\taroten\menu.h
+1605988517 c:\users\valentin\documents\programming\c++\taroten\menu.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
 	"menuelements.h"
 	"GUI_Manager.h"
 
-1605967929 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
+1605986747 c:\users\valentin\documents\programming\c++\taroten\menuelements.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	<string>
 
-1605967532 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
+1605988385 c:\users\valentin\documents\programming\c++\taroten\pre_game.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
@@ -487,11 +487,12 @@
 	"characters.h"
 	"GUI_Manager.h"
 
-1605908149 c:\users\valentin\documents\programming\c++\taroten\characters.h
+1605988330 c:\users\valentin\documents\programming\c++\taroten\characters.h
 	"Cards.h"
 	<iostream>
+	<fstream>
 
-1605968001 c:\users\valentin\documents\programming\c++\taroten\gui_manager.h
+1605987365 c:\users\valentin\documents\programming\c++\taroten\gui_manager.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"

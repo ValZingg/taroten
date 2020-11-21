@@ -22,14 +22,17 @@ class GUI_Element
         sf::Texture e_texture; //texture de l'élément
         sf::Sprite e_sprite; //sprite de l'élément
 
+        std::string unique_identifier; //utile si on veux retrouver une instance spécifique
+
         bool has_an_image = false; //permet de sauter cet élément dans la fonction de dessinage si il n'a pas d'image
         bool has_text = false; //même chose mais pour le texte
         bool highlight_on = false; //change de couleur si on le survole avec le curseur
         bool is_clickable = false;
 
 
-        GUI_Element(float width, float height, float locationx, float locationy)
+        GUI_Element(std::string Identifier,float width, float height, float locationx, float locationy)
         {
+            unique_identifier = Identifier; //assigne l'identifiant
             //=== positionnement du sprite du bouton et textures
             e_texture.loadFromFile(PATH_TO_DEFAULT_TEXTURE); //charge la texture
             e_sprite.setTexture(e_texture); //assigne la texture au sprite
@@ -53,7 +56,7 @@ class GUI_Button : public GUI_Element
         sf::Text b_text; //représentation graphique du texte
         std::string b_action; //L'action que fera le bouton quand on clique dessus
 
-        GUI_Button(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy) : GUI_Element(width,height,locationx,locationy)
+        GUI_Button(std::string Identifier,sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy) : GUI_Element(Identifier,width,height,locationx,locationy)
         {
             is_clickable = true;
             highlight_on = true;
@@ -81,7 +84,7 @@ class GUI_Button_with_image : public GUI_Button
         sf::Sprite bi_sprite;
 
         //c'est très long et très moche, mais je sais pas comment faire autrement
-        GUI_Button_with_image(sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy,std::string imagepath) : GUI_Button(font,text,action,width,height,locationx,locationy)
+        GUI_Button_with_image(std::string Identifier, sf::Font *font,std::string text, std::string action, float width, float height, float locationx, float locationy,std::string imagepath) : GUI_Button(Identifier,font,text,action,width,height,locationx,locationy)
         {
             is_clickable = true;
             //chargement et assignations
@@ -103,6 +106,78 @@ class GUI_Button_with_image : public GUI_Button
         void Reload_image()
         {
             bi_sprite.setTexture(bi_texture);
+        }
+
+        void New_Image(std::string filepath) //change l'image actuelle
+        {
+            bi_texture.loadFromFile(filepath);
+            bi_sprite.setTexture(bi_texture);
+        }
+
+};
+
+//GUI_TEXTBOX : pratiquement pareil qu'un bouton dans la structure, à la différence que vous ne pouvez pas cliquer dessus
+class GUI_TextBox : public GUI_Element
+{
+    public:
+        sf::Text b_text; //représentation graphique du texte
+
+        GUI_TextBox(std::string Identifier,sf::Font *font,std::string text, float width, float height, float locationx, float locationy) : GUI_Element(Identifier,width,height,locationx,locationy)
+        {
+            is_clickable = false;
+            highlight_on = false;
+
+            b_text.setFont(*font);   //assigne la police
+            b_text.setString(text); //assigne le texte au graphisme
+            b_text.setCharacterSize(30);
+            b_text.setFillColor(sf::Color::White);
+            has_text = true;
+
+            //Aligne le texte
+            b_text.setPosition((e_sprite.getPosition().x + e_sprite.getLocalBounds().width/6), (e_sprite.getPosition().y + e_sprite.getLocalBounds().height/15));
+        }
+
+};
+
+//même chose que bouton avec image, mais sans texte et sans action
+class GUI_Image : public GUI_Element
+{
+    public:
+        sf::Texture i_texture;
+        sf::Sprite i_sprite;
+
+        GUI_Image(std::string Identifier, float width, float height, float locationx, float locationy,std::string filepath) : GUI_Element(Identifier,width,height,locationx,locationy)
+        {
+            is_clickable = false;
+            has_an_image = false;
+            //chargement et assignations
+            if(filepath != "empty")
+            {
+                if(!i_texture.loadFromFile(filepath))std::cout << "Failed loading image :" << filepath << std::endl;
+                else has_an_image = true;
+                i_sprite.setTexture(i_texture);
+
+                //positionnement de l'image
+                i_sprite.setOrigin(sf::Vector2f(i_sprite.getGlobalBounds().width/2, i_sprite.getGlobalBounds().height/2));
+
+                float scalex = width / i_sprite.getGlobalBounds().width;
+                float scaley = height / i_sprite.getGlobalBounds().height;
+                i_sprite.setScale(sf::Vector2f(scalex,scaley ));
+                i_sprite.setPosition(sf::Vector2f(e_sprite.getPosition().x + (e_sprite.getGlobalBounds().width / 2), e_sprite.getPosition().y + (e_sprite.getGlobalBounds().height)));
+            }
+        }
+
+        void Change_Image(std::string filepath) //change l'image actuelle
+        {
+            if(!i_texture.loadFromFile(filepath))std::cout << "Failed loading image :" << filepath << std::endl;
+            this->i_sprite.setTexture(i_texture);
+            has_an_image = true;
+
+            //réduire légèrement la taille
+            i_sprite.setScale(sf::Vector2f(0.8f,0.8f));
+
+            //repositionnement de l'image
+            i_sprite.setPosition(sf::Vector2f((e_sprite.getGlobalBounds().width/2), e_sprite.getPosition().y + (e_sprite.getLocalBounds().height/6)));
         }
 
 };
