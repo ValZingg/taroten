@@ -70,8 +70,9 @@ class GUI_Button : public GUI_Element
             b_action = action; //assigne l'action
 
             //Aligne le texte au centre du bouton
-            float xPos = (locationx + e_sprite.getLocalBounds().width / 2) - (b_text.getLocalBounds().width / 2);
-            b_text.setPosition(xPos, e_sprite.getPosition().y);
+            float xPos = (locationx + e_sprite.getLocalBounds().width / 10);
+            float yPos = (locationy + e_sprite.getLocalBounds().height / 20);
+            b_text.setPosition(xPos, yPos);
         }
 
 };

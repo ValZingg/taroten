@@ -3,6 +3,7 @@
 #include "Cards.h"
 #include "menu.h"
 #include "pre_game.h"
+#include "explore.h"
 
 #define WINDOW_HEIGHT 1600
 #define WINDOW_WIDTH 900
@@ -24,18 +25,23 @@ int main()
 
     //============== LOOP DU MENU ============
     bool game_active = true;
+    int choixmenu;
     while(game_active)
     {
         if(!window.isOpen())return 999; //si l'utilisateur ferme la fenêtre avec le X rouge, fermer le programme
-        std::cout << "et un autre" << std::endl;
-        int choixmenu = MenuLoop(&window); //envoie l'utilsateur dans menu.h, et décide de la suite suivant le chiffre renvoyé
+        //envoie l'utilsateur dans menu.h, et décide de la suite suivant le chiffre renvoyé
         switch(choixmenu)
         {
             default:
+                choixmenu = MenuLoop(&window);
                 break;
 
             case 1: //"Pré-jeu", là ou l'utilisateur va choisir son personnage et autres options
-                PreGame(&window);
+                choixmenu = PreGame(&window);
+                break;
+
+            case 2: //Le vrai jeu cette fois
+                choixmenu = Explore(&window);
                 break;
 
             case 99:

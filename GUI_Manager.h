@@ -8,6 +8,7 @@
 #include "characters.h"
 
 Character player("Maya"); //charge maya par défaut
+bool chose_character = false; //a choisi un personnage
 
 int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements, sf::Clock clock)
 {
@@ -40,7 +41,7 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
         if(menu_elements[k]->e_sprite.getGlobalBounds().contains(sf::Mouse::getPosition(*window).x,sf::Mouse::getPosition(*window).y))
         {
             //montre qu'on le survole en changeant le texte en jaune si il est défini pour
-            if(menu_elements[k]->highlight_on)menu_elements[k]->e_sprite.setColor(sf::Color::Yellow);
+            if(menu_elements[k]->highlight_on)menu_elements[k]->e_sprite.setColor(sf::Color::Blue);
             //et qu'on clique dessus
             //Il faut qu'au moins une seconde soit passée depuis le début de la boucle pour pouvoir cliquer.
             //Cela sert à empecher le programme de register les clics entre changement d'interface
@@ -60,11 +61,18 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
                 if(button_action == "newgame")
                     return 1; //envoie l'utilisateur au choix du personnage
 
+                if(button_action == "startgame" && chose_character)
+                {
+                    return 2;
+                }
+
+
 
                     //=========CHOIX DE PERSONNAGES===========
                 if(button_action == "choose_maya")
                 {
                     player.LoadCharacter("Maya");
+                    chose_character = true;
                     for(unsigned int i = 0;i < menu_elements.size();i++) //cherche dans tout les éléments pour trouver le bon
                     {
                         //change l'image du personnage choisi par celui de Maya ou le joueur viens de cliquer dessus
@@ -88,7 +96,7 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
         else
         {
             //si la souris ne survole plus un bouton, on le remet dans sa couleur normale
-            if(menu_elements[k]->e_sprite.getColor() == sf::Color::Yellow)
+            if(menu_elements[k]->e_sprite.getColor() == sf::Color::Blue)
             {
                 menu_elements[k]->e_sprite.setColor(sf::Color::White);
             }
