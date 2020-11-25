@@ -3,6 +3,9 @@
 #include "Cards.h"
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <sstream>
+#include <string.h>
 
 /*
     CHARACTERS.h
@@ -11,6 +14,8 @@
     définir les différents personnages que le joueur pourra
     jouer.
 */
+
+#define DEFAULT_CARD_AMOUNT 5
 
 //Remplace toutes les instances d'un caractère dans un string par un autre.
 //Don généreux d'un inconnu sur StackOverflow.com.
@@ -28,6 +33,7 @@ class Character
     public:
         std::string name; //nom du personnage
         std::string description;
+        std::string default_cards;
         std::vector<Card> Deck; //deck du personnage
         int hp; //points de vies actuels hp = "health points"
         int max_hp; //points de vies maximums
@@ -71,6 +77,7 @@ class Character
             std::string line;
             int counter = 0; //pour savoir à quelle ligne on est
             file_to_read.open(filepath);
+            Deck.clear(); //Nettoie le deck de toutes les cartes avant d'en recharger
             while(std::getline(file_to_read,line))//tant qu'on lit le fichier
             {
                 //====DONNEES DES LIGNES====
@@ -89,13 +96,39 @@ class Character
                         max_hp = std::stoi(line);//convertir le string en int
                         hp = max_hp; //le personnage commence toujours avec tout ses points de vies
                         break;
+
+                    case 2: //cartes de départ
+                        line.erase(0,14);
+                        line.erase(line.size(),1); //supprime le dernier charactère "\n"
+                        default_cards = line;
+
+
+                        break;
                 }
                 //==========================
-
                 //========prochaine ligne
                 counter++;
             }
             file_to_read.close();
+        }
+
+        void LoadDefaultCards(std::array<Card,23> allcards)
+        {
+            //On récupère les TAGS des cartes
+            std::string delimiter = ",";
+            std::replace( default_cards.begin(),default_cards.end(), ',' , '\n');
+
+            std::istringstream finalresult(default_cards);
+            std::string line;
+            //Grâce aux tags, on cherche dans les cartes
+            while(std::getline(finalresult,line))
+            {
+                for(unsigned int i = 1;i < allcards.size();i++) //on cherche dans toutes les cartes
+                {
+                    if(allcards[i].tag == line)Deck.push_back(allcards[i]);
+                }
+            }
+
         }
 };
 

@@ -10,11 +10,20 @@
 int Explore(sf::RenderWindow *window)
 {
     sf::Clock clock;
+    //=============== charge la police d'écriture pour les éléments de l'interface======
+    sf::Font police; //charge la police d'écriture
+    police.loadFromFile("fonts/Timeless.ttf");
+    //========= SETUP DES CARTES ============
+    std::array<Card,23> allcards = LoadCards(); //Toutes les cartes du jeu
+    for(unsigned int k = 1;k < allcards.size();k++)allcards[k].Reload_texture(); //Recharge toutes les textures des cartes pour éviter les carrés blancs
+
+    player.LoadDefaultCards(allcards);
+    for(unsigned int k = 1;k < player.Deck.size();k++)player.Deck[k].Reload_texture();
     //============ vecteur des éléments graphiques ============
     std::vector<GUI_Element*> menu_elements;
 
-    GUI_Element caca("caca",500.0f,500.0f,200.0f,100.0f);
-    menu_elements.push_back(&caca);
+
+
     //============================================================
     while(window->isOpen())
     {
@@ -37,6 +46,7 @@ int Explore(sf::RenderWindow *window)
     }
     return 0;
 }
+
 
 
 #endif // EXPLORE_H_INCLUDED

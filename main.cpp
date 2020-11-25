@@ -16,12 +16,7 @@ int main()
     window.setFramerateLimit(60);
     //=================
 
-    //========= SETUP DES CARTES ============
-    std::array<Card,23> allcards = LoadCards(); //Toutes les cartes du jeu
-    for(unsigned int k = 1;k < allcards.size();k++) //Recharge toutes les textures des cartes pour éviter les carrés blancs
-    {
-        allcards[k].Reload_texture();
-    }
+
 
     //============== LOOP DU MENU ============
     bool game_active = true;
@@ -63,6 +58,7 @@ int main()
 
         //==================Affichage des éléments==================
         window.clear();//nettoie la fenêtre
+        /*
         //====Choses à afficher======
         float currentx = 125;
         float currenty = 100;
@@ -83,7 +79,7 @@ int main()
             }
             else allcards[g].image_spr.setScale(sf::Vector2f(1.0f,1.0f));
 
-        }
+        }*/
         //=================
         window.display();
     }

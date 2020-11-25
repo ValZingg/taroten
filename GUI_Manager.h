@@ -7,6 +7,7 @@
 #include "menuelements.h"
 #include "characters.h"
 
+//Instance globale du personnage choisi
 Character player("Maya"); //charge maya par défaut
 bool chose_character = false; //a choisi un personnage
 
