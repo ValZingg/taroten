@@ -38,8 +38,12 @@ int main()
                 choixmenu = PreGame(&window);
                 break;
 
-            case 2: //Le vrai jeu cette fois
-                if(!is_seed_set)seed = getRandomNumber(100,999999,10);
+            case 2: //Partie "exploration" là ou le joueur peut se déplacer sur la carte. si c'est la première entrée dans cette fonction, génère une seed qui modifiera les paramètres du jeu.
+                if(!is_seed_set)
+                {
+                    seed = getRandomNumber(100,999999,10);
+                    is_seed_set = true;
+                }
                 choixmenu = Explore(&window, seed);
                 break;
 
