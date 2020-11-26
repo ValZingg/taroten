@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "pre_game.h"
 #include "explore.h"
+#include "Seed.h"
 
 #define WINDOW_HEIGHT 1600
 #define WINDOW_WIDTH 900
@@ -17,7 +18,9 @@ int main()
     //=================
 
 
-
+    //POUR LE JEU
+    bool is_seed_set = false;
+    int seed = 0;
     //============== LOOP DU MENU ============
     bool game_active = true;
     int choixmenu;
@@ -36,7 +39,8 @@ int main()
                 break;
 
             case 2: //Le vrai jeu cette fois
-                choixmenu = Explore(&window);
+                if(!is_seed_set)seed = getRandomNumber(100,999999,10);
+                choixmenu = Explore(&window, seed);
                 break;
 
             case 99:

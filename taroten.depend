@@ -509,13 +509,14 @@
 	"menuelements.h"
 	"characters.h"
 
-1606288819 source:c:\users\valentin.zingg\documents\autres\taroten\main.cpp
+1606386526 source:c:\users\valentin.zingg\documents\autres\taroten\main.cpp
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
 	"menu.h"
 	"pre_game.h"
 	"explore.h"
+	"Seed.h"
 
 1600852592 c:\sfml\include\sfml\system\err.hpp
 	<SFML/System/Export.hpp>
@@ -601,11 +602,22 @@
 	"characters.h"
 	"GUI_Manager.h"
 
-1606292741 c:\users\valentin.zingg\documents\autres\taroten\explore.h
+1606385816 c:\users\valentin.zingg\documents\autres\taroten\explore.h
 	<iostream>
 	<SFML/Graphics.hpp>
+	<sys/stat.h>
+	<unistd.h>
 	"Cards.h"
+	"Seed.h"
 	"menu.h"
 	"menuelements.h"
 	"characters.h"
+
+1606386619 c:\users\valentin.zingg\documents\autres\taroten\seed.h
+	<iostream>
+	<fstream>
+	<random>
+	<time.h>
+	<chrono>
+	<unistd.h>
 

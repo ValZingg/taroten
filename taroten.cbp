@@ -28,6 +28,7 @@
 		</Linker>
 		<Unit filename="Cards.h" />
 		<Unit filename="GUI_Manager.h" />
+		<Unit filename="Seed.h" />
 		<Unit filename="characters.h" />
 		<Unit filename="explore.h" />
 		<Unit filename="main.cpp" />
