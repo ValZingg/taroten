@@ -101,8 +101,6 @@ class Character
                         line.erase(0,14);
                         line.erase(line.size(),1); //supprime le dernier charactère "\n"
                         default_cards = line;
-
-
                         break;
                 }
                 //==========================

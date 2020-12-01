@@ -41,7 +41,9 @@ int main()
             case 2: //Partie "exploration" là ou le joueur peut se déplacer sur la carte. si c'est la première entrée dans cette fonction, génère une seed qui modifiera les paramètres du jeu.
                 if(!is_seed_set)
                 {
-                    seed = getRandomNumber(100,999999,10);
+                    seed = getRandomNumber(100,999999,10); //crée une seed
+                    std::array<Card,23> allcards = LoadCards(); //Charges toutes les cartes
+                    player.LoadDefaultCards(allcards);
                     is_seed_set = true;
                 }
                 choixmenu = Explore(&window, seed);

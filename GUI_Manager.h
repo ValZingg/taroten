@@ -15,7 +15,7 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
 {
     for(unsigned int k = 0;k < menu_elements.size();k++)
     {
-        window->draw(menu_elements[k]->e_sprite); //dessine tout les éléments de l'interface
+        if(menu_elements[k]->e_sprite.getTexture() != NULL)window->draw(menu_elements[k]->e_sprite); //dessine tout les éléments de l'interface
 
         //!!! Le vecteur menu_elements est fait de la classe parente GUI_element,
         //!!! donc quand nous voulons dessiner par exemple le texte d'un bouton,
@@ -31,6 +31,7 @@ int GUIMANAGER(sf::RenderWindow *window, std::vector<GUI_Element*> menu_elements
         // et si une image est trouvée, on la dessine
         GUI_Button_with_image *tempbuttonwithimg = static_cast<GUI_Button_with_image*>(menu_elements[k]);
         if(tempbuttonwithimg->has_an_image && tempbuttonwithimg->is_clickable)window->draw(tempbuttonwithimg->bi_sprite);
+
 
         //Pour les simples images:
         GUI_Image *tempimage = static_cast<GUI_Image*>(menu_elements[k]);

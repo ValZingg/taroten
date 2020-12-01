@@ -20,24 +20,35 @@ inline bool check_if_file_exists (const std::string& name)
 int Explore(sf::RenderWindow *window, int seed)
 {
     //====Création du fichier seed si pas déjà fait
-    std::string filepath = "runs/" + std::to_string(seed);
+    std::string filepath = "runs/" + std::to_string(seed) + ".tRUN";
     if(!check_if_file_exists(filepath))CreateRunFile(seed);
+
     //====Horloge
     sf::Clock clock;
+
     //=============== charge la police d'écriture pour les éléments de l'interface======
     sf::Font police; //charge la police d'écriture
     police.loadFromFile("fonts/Timeless.ttf");
+
     //========= SETUP DES CARTES ============
     std::array<Card,23> allcards = LoadCards(); //Toutes les cartes du jeu
     for(unsigned int k = 1;k < allcards.size();k++)allcards[k].Reload_texture(); //Recharge toutes les textures des cartes pour éviter les carrés blancs
 
-    //Charge le deck par défaut du joueur selon le personnage choisis
-    player.LoadDefaultCards(allcards);
+    //Recharge les textures du deck du joueur
     for(unsigned int k = 1;k < player.Deck.size();k++)player.Deck[k].Reload_texture();
+
     //============ vecteur des éléments graphiques ============
     std::vector<GUI_Element*> menu_elements;
+    menu_elements = GetAllSquares(police,filepath);
+    for(unsigned int k = 0; k < menu_elements.size();k++)
+    {
+        menu_elements[k]->Reload_texture();
+    }
+
     GUI_TextBox seedbu("seedbox",&police,std::to_string(seed),200.0f,200.0f,200.0f,200.0f);
     menu_elements.push_back(&seedbu);
+
+
 
 
 
