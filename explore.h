@@ -1,6 +1,7 @@
 #ifndef EXPLORE_H_INCLUDED
 #define EXPLORE_H_INCLUDED
 #include <iostream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -10,12 +11,31 @@
 #include "menuelements.h"
 #include "characters.h"
 
+#define ROOM_SIZE 9
+
 inline bool check_if_file_exists (const std::string& name)
 {
   struct stat buffer;
   return (stat (name.c_str(), &buffer) == 0);
 }
 
+
+void DumpTrash(std::vector<GUI_Element*> menushit)
+{
+    std::string filepath = "runs/MERDE.txt";
+    std::ofstream fichier(filepath); //crée le fichier vide
+    fichier.close();
+
+    fichier.open(filepath);
+    for(unsigned int k = 0;k < menushit.size();k++)
+    {
+        fichier << "OBJET " << k << std::endl;
+        fichier << menushit[k]->unique_identifier << std::endl;
+        fichier << "----------------------" << std::endl;
+    }
+    std::cout << "Dump successful." << std::endl;
+    fichier.close();
+}
 
 int Explore(sf::RenderWindow *window, int seed)
 {
@@ -39,16 +59,26 @@ int Explore(sf::RenderWindow *window, int seed)
 
     //============ vecteur des éléments graphiques ============
     std::vector<GUI_Element*> menu_elements;
-    menu_elements = GetAllSquares(police,filepath);
-    for(unsigned int k = 0; k < menu_elements.size();k++)
+    //menu_elements = GetAllSquares(police,filepath);
+
+    for(unsigned int k = 0; k < ROOM_SIZE;k++)
     {
+        GUI_Button tempbutton = ReadRunSquare(filepath,k,police);
+        menu_elements.push_back(&tempbutton);
+    }
+    for(unsigned int k = 0;k < menu_elements.size();k++)
+    {
+        std::cout << "Nom avant de changer = " << menu_elements[k]->unique_identifier << std::endl;
+        menu_elements[k]->unique_identifier = "square" + std::to_string(k);
+        std::cout << "Nom après avoir = " << menu_elements[k]->unique_identifier << std::endl;
+        std::cout << k << " | Recharge la texture de : " << menu_elements[k]->unique_identifier << std::endl;
         menu_elements[k]->Reload_texture();
     }
+    for(unsigned int k = 0;k < menu_elements.size();k++)std::cout << menu_elements[k]->unique_identifier << std::endl;
+    DumpTrash(menu_elements);
 
-    GUI_TextBox seedbu("seedbox",&police,std::to_string(seed),200.0f,200.0f,200.0f,200.0f);
-    menu_elements.push_back(&seedbu);
-
-
+    //GUI_TextBox seedbu("seedbox",&police,std::to_string(seed),200.0f,200.0f,200.0f,200.0f);
+    //menu_elements.push_back(&seedbu);
 
 
 

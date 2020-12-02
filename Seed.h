@@ -125,7 +125,6 @@ std::vector<GUI_Element*> GetAllSquares(sf::Font police,std::string filepath)
     for(int k = 0;k < nblines;k++)
     {
         GUI_Button tempbutton = ReadRunSquare(filepath,k,police);
-        std::cout << tempbutton.b_text.getString().toAnsiString();
         Toreturn.push_back(&tempbutton);
     }
 

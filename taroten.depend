@@ -577,7 +577,7 @@
 	<SFML/Graphics.hpp>
 	<string>
 
-1606818844 c:\users\valentin.zingg\documents\autres\taroten\gui_manager.h
+1606897475 c:\users\valentin.zingg\documents\autres\taroten\gui_manager.h
 	<iostream>
 	<SFML/Graphics.hpp>
 	"Cards.h"
@@ -602,8 +602,9 @@
 	"characters.h"
 	"GUI_Manager.h"
 
-1606818379 c:\users\valentin.zingg\documents\autres\taroten\explore.h
+1606897794 c:\users\valentin.zingg\documents\autres\taroten\explore.h
 	<iostream>
+	<fstream>
 	<SFML/Graphics.hpp>
 	<sys/stat.h>
 	<unistd.h>
@@ -613,7 +614,7 @@
 	"menuelements.h"
 	"characters.h"
 
-1606818925 c:\users\valentin.zingg\documents\autres\taroten\seed.h
+1606897790 c:\users\valentin.zingg\documents\autres\taroten\seed.h
 	<iostream>
 	<fstream>
 	<random>
